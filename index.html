@@ -139,7 +139,7 @@
 		/* Always set the map height explicitly to define the size of the div
 	       * element that contains the map. */
 	      #map {
-	        height: 100%;
+	        min-height: 600px
 	      }
 	      /* Optional: Makes the sample page fill the window. */
 	      html, body {
@@ -159,29 +159,29 @@
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="#">
-                        My Superstar
+                        Local Restaurants
                     </a>
                 </li>
                 <li>
-                    <a href="#">Dashboard</a>
+                    <a href="#">My Casa</a>
                 </li>
                 <li>
-                    <a href="#">Shortcuts</a>
+                    <a href="#">Loco Amblade</a>
                 </li>
                 <li>
-                    <a href="#">Overview</a>
+                    <a href="#">Matador</a>
                 </li>
                 <li>
-                    <a href="#">Events</a>
+                    <a href="#">Excuse me caffe</a>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a href="#">Last supper</a>
                 </li>
                 <li>
-                    <a href="#">Services</a>
+                    <a href="#">Floating room</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="#">Red Hook</a>
                 </li>
             </ul>
         </div>
@@ -217,13 +217,17 @@
 
                 <h1>Local Restaurants</h1>
                 <p>This is a wonderful place where you can find the best restaurants around Bucharest. Be sure to check this page regulary and remember to bookmark us!</p>
+            
+                <hr>
+
+			    
+                <div id="map"></div>
             </div>
         </div>
         <!-- /#page-content-wrapper -->
 
     </div>
 
-    <div id="map"></div>
     <script>
       var map;
       function initMap() {
