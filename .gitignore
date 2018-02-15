@@ -11,3 +11,15 @@ assets/vendor/components-font-awesome/css/*
 !assets/vendor/components-font-awesome/webfonts
 !assets/vendor/components-font-awesome/css/fontawesome-all.css
 !assets/vendor/components-font-awesome/css/fontawesome-all.min.css
+
+!assets/vendor/jquery
+assets/vendor/jquery/*
+!assets/vendor/jquery/dist
+assets/vendor/jquery/dist/*
+!assets/vendor/jquery/dist/jquery.min.js
+
+!assets/vendor/tether
+assets/vendor/tether/*
+!assets/vendor/tether/dist
+assets/vendor/tether/dist/*
+!assets/vendor/tether/dist/js
