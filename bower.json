@@ -1,13 +1,12 @@
 {
-  "name": "my-superstar",
-  "homepage": "https://github.com/ucv/My-Superstar",
+  "name": "My Superstar",
+  "homepage": "https://ucv.github.io/My-Superstar/",
   "authors": [
     "Ungureanu C. Valentin <u.valentin89@gmail.com>"
   ],
   "description": "",
   "main": "",
   "license": "MIT",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
@@ -18,7 +17,6 @@
   ],
   "dependencies": {
     "bootstrap": "v4.0.0-alpha.2",
-    "components-font-awesome": "^5.0.6",
-    "tether": "^1.4.3"
+    "components-font-awesome": "^5.0.6"
   }
 }
