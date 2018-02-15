@@ -27,25 +27,19 @@
                 </a>
             </li>
             <li>
-                <a href="#">My Casa</a>
+                <a href="#" id="goToMap1">My Casa</a>
             </li>
             <li>
-                <a href="#">Loco Amblade</a>
+                <a href="#" id="goToMap2">Loco Amblade</a>
             </li>
             <li>
-                <a href="#">Matador</a>
+                <a href="#" id="goToMap3">Matador</a>
             </li>
             <li>
-                <a href="#">Excuse me caffe</a>
+                <a href="#" id="goToMap4">Excuse me caffe</a>
             </li>
             <li>
-                <a href="#">Last supper</a>
-            </li>
-            <li>
-                <a href="#">Floating room</a>
-            </li>
-            <li>
-                <a href="#">Red Hook</a>
+                <a href="#" id="goToMap5">Last supper</a>
             </li>
         </ul>
     </div>
@@ -87,6 +81,7 @@
             <div id="map"></div>
             <hr>
             <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Show Restaurants</a>
+            <a href="#reset" class="btn btn-secondary float-xs-right" id="reset">Reset</a>
 
         </div>
     </div>
@@ -108,19 +103,22 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv0QDQpHVav-cWx0oKdHxp0vuYnyJ_oco&callback=initMap" async defer></script>
 <script type="text/javascript">
 
-    // Data for the markers consisting of a name, a LatLng and a zIndex for the
-    // order in which these markers should display on top of each other.
-    var beaches = null;
-
-    //Data saved in a file
-    $.getJSON( "assets/restaurants.json", function( data ) {
-        beaches = data;
-    }).fail(function( jqxhr, textStatus, error ) {
-        var err = textStatus + ", " + error;
-        console.log( "Request Failed: " + err );
-    });
+    $('#goToMap1').click(function(){ clickroute(beaches[0][1],beaches[0][2]); return false; });
+    $('#goToMap2').click(function(){ clickroute(beaches[1][1],beaches[1][2]); return false; });
+    $('#goToMap3').click(function(){ clickroute(beaches[2][1],beaches[2][2]); return false; });
+    $('#goToMap4').click(function(){ clickroute(beaches[3][1],beaches[3][2]); return false; });
+    $('#goToMap5').click(function(){ clickroute(beaches[4][1],beaches[4][2]); return false; });
+    $('#reset').click(function(){ clickroute(beaches[0][1],beaches[0][2],10); return false; });
 
 
+    function clickroute(lati,long,zoom = 12) {
+
+        var latLng = new google.maps.LatLng(lati, long); //Makes a latlng
+
+        map.panTo(latLng); //Make map global
+        // map.setZoom(zoom + Math.floor((Math.random() * 4) + 1));
+        map.setZoom(zoom);
+    }
 
 </script>
 <script src="assets/js/google_maps.js"></script>

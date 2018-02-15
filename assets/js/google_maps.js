@@ -1,4 +1,4 @@
-var map, infoWindow;
+var map, infoWindow, beaches;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -7,7 +7,17 @@ function initMap() {
     });
     infoWindow = new google.maps.InfoWindow;
 
-    setMarkers(map);
+    // Data for the markers consisting of a name, a LatLng and a zIndex for the
+    // order in which these markers should display on top of each other.
+
+    $.getJSON( "assets/restaurants.json", function( data ) {
+        beaches = data;
+        setMarkers(map);
+    }).fail(function( jqxhr, textStatus, error ) {
+        var err = textStatus + ", " + error;
+        console.log( "Request Failed: " + err );
+    });
+
 
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
