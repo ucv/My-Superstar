@@ -3,11 +3,12 @@
 ![alt text](/git-resources/demo.png?raw=true "Demo")
 
 
-#####Requirements:
+##### Requirements:
 
 - npm: https://nodejs.org/en/
 - bower: npm install -g bower
 
-#####Installing:
+##### Installing:
 
 - bower install
+q
