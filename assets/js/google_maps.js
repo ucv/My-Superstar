@@ -12,11 +12,22 @@ function initMap() {
 
     $.getJSON( "assets/restaurants.json", function( data ) {
         beaches = data;
-        setMarkers(map);
     }).fail(function( jqxhr, textStatus, error ) {
         var err = textStatus + ", " + error;
         console.log( "Request Failed: " + err );
+        //this is a failsafe so it woks on local whitout a webserver
+        beaches = [
+            ['Bondi Beach', -33.890542, 151.274856, 4],
+            ['Coogee Beach', -33.923036, 151.259052, 5],
+            ['Cronulla Beach', -34.028249, 151.157507, 3],
+            ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+            ['Maroubra Beach', -33.950198, 151.259302, 1]
+        ];
+
+
     });
+
+    setMarkers(map);
 
 
     // Try HTML5 geolocation.
@@ -78,6 +89,13 @@ function setMarkers(map) {
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+
+    var err = browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.';
+
+    console.log("Request Failed:",err);
+
     /* Notice Geolocation woks only on https
     *  https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only
     */
