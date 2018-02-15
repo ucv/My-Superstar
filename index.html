@@ -1,257 +1,273 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+    <title></title>
 
-	<!-- Required meta tags -->
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-  
-
-	<style type="text/css">
-		
-		body {
-		  overflow-x: hidden;
-		}
-
-		#wrapper {
-		  padding-left: 0;
-		  -webkit-transition: all 0.5s ease;
-		  -moz-transition: all 0.5s ease;
-		  -o-transition: all 0.5s ease;
-		  transition: all 0.5s ease;
-		}
-
-		#wrapper.toggled {
-		  padding-left: 250px;
-		}
-
-		#sidebar-wrapper {
-		  z-index: 1000;
-		  position: fixed;
-		  left: 0px;
-		  width: 250px;
-		  height: 100%;
-		  margin-right: -250px;
-		  overflow-y: auto;
-		  background: #000;
-		  -webkit-transition: all 0.5s ease;
-		  -moz-transition: all 0.5s ease;
-		  -o-transition: all 0.5s ease;
-		  transition: all 0.5s ease;
-		}
-
-		#wrapper.toggled #sidebar-wrapper {
-		  width: 250px;
-		}
-
-		#page-content-wrapper {
-		  width: 100%;
-		  position: absolute;
-		  padding: 15px;
-		}
-
-		#wrapper.toggled #page-content-wrapper {
-		  position: absolute;
-		  margin-left: -250px;
-		}
 
 
-		/* Sidebar Styles */
+    <style type="text/css">
 
-		.sidebar-nav {
-		  position: absolute;
-		  top: 0;
-		  width: 250px;
-		  margin: 0;
-		  padding: 0;
-		  list-style: none;
-		}
+        body {
+            overflow-x: hidden;
+        }
 
-		.sidebar-nav li {
-		  text-indent: 20px;
-		  line-height: 40px;
-		}
+        #wrapper {
+            padding-left: 0;
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+        }
 
-		.sidebar-nav li a {
-		  display: block;
-		  text-decoration: none;
-		  color: #999999;
-		}
+        #wrapper.toggled {
+            padding-left: 250px;
+        }
 
-		.sidebar-nav li a:hover {
-		  text-decoration: none;
-		  color: #fff;
-		  background: rgba(255, 255, 255, 0.2);
-		}
+        #sidebar-wrapper {
+            z-index: 1000;
+            position: fixed;
+            left: 0px;
+            width: 250px;
+            height: 100%;
+            margin-right: -250px;
+            overflow-y: auto;
+            background: #000;
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+        }
 
-		.sidebar-nav li a:active, .sidebar-nav li a:focus {
-		  text-decoration: none;
-		}
+        #wrapper.toggled #sidebar-wrapper {
+            width: 250px;
+        }
 
-		.sidebar-nav>.sidebar-brand {
-		  height: 65px;
-		  font-size: 18px;
-		  line-height: 60px;
-		}
+        #page-content-wrapper {
+            width: 100%;
+            position: absolute;
+            padding: 15px;
+        }
 
-		.sidebar-nav>.sidebar-brand a {
-		  color: #999999;
-		}
+        #wrapper.toggled #page-content-wrapper {
+            position: absolute;
+            margin-left: -250px;
+        }
 
-		.sidebar-nav>.sidebar-brand a:hover {
-		  color: #fff;
-		  background: none;
-		}
+        /* Sidebar Styles */
 
-		#menu-toggle {
-			margin-right: 15px; 
-		}
+        .sidebar-nav {
+            position: absolute;
+            top: 0;
+            width: 250px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
 
-		@media(min-width:768px) {
-		  #wrapper {
-		    padding-left: 0;
-		  }
-		  #wrapper.toggled {
-		    padding-left: 250px;
-		  }
-		  #sidebar-wrapper {
-		    width: 0;
-		  }
-		  #wrapper.toggled #sidebar-wrapper {
-		    width: 250px;
-		  }
-		  #page-content-wrapper {
-		    padding: 20px;
-		    position: relative;
-		  }
-		  #wrapper.toggled #page-content-wrapper {
-		    position: relative;
-		    margin-left: 0;
-		  }
-		}
+        .sidebar-nav li {
+            text-indent: 20px;
+            line-height: 40px;
+        }
 
-		/* Always set the map height explicitly to define the size of the div
-	       * element that contains the map. */
-	      #map {
-	        min-height: 600px
-	      }
-	      /* Optional: Makes the sample page fill the window. */
-	      html, body {
-	        height: 100%;
-	        margin: 0;
-	        padding: 0;
-	      }
+        .sidebar-nav li a {
+            display: block;
+            text-decoration: none;
+            color: #999999;
+        }
 
-	</style>
+        .sidebar-nav li a:hover {
+            text-decoration: none;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar-nav li a:active, .sidebar-nav li a:focus {
+            text-decoration: none;
+        }
+
+        .sidebar-nav > .sidebar-brand {
+            height: 65px;
+            font-size: 18px;
+            line-height: 60px;
+        }
+
+        .sidebar-nav > .sidebar-brand a {
+            color: #999999;
+        }
+
+        .sidebar-nav > .sidebar-brand a:hover {
+            color: #fff;
+            background: none;
+        }
+
+        #menu-toggle {
+            margin-right: 15px;
+        }
+
+        @media (min-width: 768px) {
+            #wrapper {
+                padding-left: 0;
+            }
+
+            #wrapper.toggled {
+                padding-left: 250px;
+            }
+
+            #sidebar-wrapper {
+                width: 0;
+            }
+
+            #wrapper.toggled #sidebar-wrapper {
+                width: 250px;
+            }
+
+            #page-content-wrapper {
+                padding: 20px;
+                position: relative;
+            }
+
+            #wrapper.toggled #page-content-wrapper {
+                position: relative;
+                margin-left: 0;
+            }
+        }
+
+        /* Always set the map height explicitly to define the size of the div
+           * element that contains the map. */
+        #map {
+            min-height: 600px
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
 </head>
 <body>
 
 <div id="wrapper">
 
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        Local Restaurants
-                    </a>
-                </li>
-                <li>
-                    <a href="#">My Casa</a>
-                </li>
-                <li>
-                    <a href="#">Loco Amblade</a>
-                </li>
-                <li>
-                    <a href="#">Matador</a>
-                </li>
-                <li>
-                    <a href="#">Excuse me caffe</a>
-                </li>
-                <li>
-                    <a href="#">Last supper</a>
-                </li>
-                <li>
-                    <a href="#">Floating room</a>
-                </li>
-                <li>
-                    <a href="#">Red Hook</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-              	
-
-              	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-              	  <a href="#menu-toggle" class="btn btn-secondary float-left" id="menu-toggle"><i class="fas fa-bars"></i></a>
-				  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				    <span class="navbar-toggler-icon"></span>
-				  </button>
-				  
-				  <a class="navbar-brand" href="#">My Superstar</a>
-
-				  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-				    <ul class="navbar-nav mr-auto">
-				      
-				    </ul>
-				    <form class="form-inline my-2 my-lg-0">
-				      <input class="form-control mr-sm-2" type="text" placeholder="Search">
-				      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-				    </form>
-				  </div>
-				</nav>
-
-              	
-                <hr>
-
-
-                <h1>Local Restaurants</h1>
-                <p>This is a wonderful place where you can find the best restaurants around Bucharest. Be sure to check this page regulary and remember to bookmark us!</p>
-            
-                <hr>
-
-			    
-                <div id="map"></div>
-            </div>
-        </div>
-        <!-- /#page-content-wrapper -->
-
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <a href="#">
+                    Local Restaurants
+                </a>
+            </li>
+            <li>
+                <a href="#">My Casa</a>
+            </li>
+            <li>
+                <a href="#">Loco Amblade</a>
+            </li>
+            <li>
+                <a href="#">Matador</a>
+            </li>
+            <li>
+                <a href="#">Excuse me caffe</a>
+            </li>
+            <li>
+                <a href="#">Last supper</a>
+            </li>
+            <li>
+                <a href="#">Floating room</a>
+            </li>
+            <li>
+                <a href="#">Red Hook</a>
+            </li>
+        </ul>
     </div>
+    <!-- /#sidebar-wrapper -->
 
-    <script>
-      var map;
-      function initMap() {
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+
+
+            <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+                <a href="#menu-toggle" class="btn btn-secondary float-left" id="menu-toggle"><i class="fas fa-bars"></i></a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <a class="navbar-brand" href="#">My Superstar</a>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
+
+
+            <hr>
+
+
+            <h1>Local Restaurants</h1>
+            <p>This is a wonderful place where you can find the best restaurants around Bucharest. Be sure to check this
+                page regulary and remember to bookmark us!</p>
+
+            <hr>
+
+
+            <div id="map"></div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+
+<script>
+    var map;
+
+    function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
+            center: {lat: -34.397, lng: 150.644},
+            zoom: 8
         });
-      }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv0QDQpHVav-cWx0oKdHxp0vuYnyJ_oco&callback=initMap"
-    async defer></script>
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv0QDQpHVav-cWx0oKdHxp0vuYnyJ_oco&callback=initMap"
+        async defer></script>
 
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-  
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
 
-	<script type="text/javascript">
-		 $("#menu-toggle").click(function(e) {
-	        e.preventDefault();
-	        $("#wrapper").toggleClass("toggled");
-	    });
-	</script>
+
+<script type="text/javascript">
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
 
 </body>
 </html>
