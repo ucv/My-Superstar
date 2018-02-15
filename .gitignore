@@ -1,2 +1,5 @@
 .idea/
 assets/vendor/
+!assets/vendor/bootstrap/dist/
+!assets/vendor/components-font-awesome/css/fontawesome-all.css
+!assets/vendor/components-font-awesome/webfonts
