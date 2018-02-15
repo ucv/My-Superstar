@@ -1,6 +1,7 @@
 # Fur my luv
 ## Demo
 ![alt text](/git-resources/demo.png?raw=true "Demo")
+![alt text](/git-resources/demo_mobile.png?raw=true "Demo")
 
 
 ##### Requirements:
