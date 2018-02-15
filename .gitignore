@@ -1,5 +1,12 @@
 .idea/
-assets/vendor/
+assets/vendor/*
+!assets/vendor/bootstrap
+assets/vendor/bootstrap/*
 !assets/vendor/bootstrap/dist/
-!assets/vendor/components-font-awesome/css/fontawesome-all.css
+
+!assets/vendor/components-font-awesome
+assets/vendor/components-font-awesome/*
+!assets/vendor/components-font-awesome/css
+assets/vendor/components-font-awesome/css/*
 !assets/vendor/components-font-awesome/webfonts
+!assets/vendor/components-font-awesome/css/fontawesome-all.css
