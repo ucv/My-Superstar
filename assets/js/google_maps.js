@@ -24,7 +24,10 @@ function initMap() {
         $.getJSON( "assets/restaurants.json", function( data ) {
             beaches = data;
             setMarkers(map);
-        }).fail(function( jqxhr, textStatus, error ) {
+        }).success(function(data){
+            jsonLoaded(data);
+        }
+        ).fail(function( jqxhr, textStatus, error ) {
             var err = textStatus + ", " + error;
             console.log( "Request Failed: " + err );
             setMarkers(map);
@@ -81,12 +84,12 @@ function setMarkers(map) {
     for (var i = 0; i < beaches.length; i++) {
         var beach = beaches[i];
         var marker = new google.maps.Marker({
-            position: {lat: beach[1], lng: beach[2]},
+            position: {lat: beach.lat, lng: beach.lng},
             map: map,
             icon: image,
             shape: shape,
-            title: beach[0],
-            zIndex: beach[3]
+            title: beach.name,
+            zIndex: beach.id
         });
     }
 }

@@ -13,3 +13,12 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
+.reviews .card-block {
+    padding: 10px;
+}
+.reviews{
+    max-height: 600px;
+    overflow-x:scroll;
+    overflow-x:hidden;
+}

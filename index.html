@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My superstar</title>
+    <title>Local Restaurants</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -17,7 +17,6 @@
 
 
 <div id="wrapper">
-
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
@@ -27,19 +26,19 @@
                 </a>
             </li>
             <li>
-                <a href="#" id="goToMap1">My Casa</a>
+                <a href="#" data-id="1" class="goToLocation">My Casa</a>
             </li>
             <li>
-                <a href="#" id="goToMap2">Loco Amblade</a>
+                <a href="#" data-id="2" class="goToLocation">Loco Amblade</a>
             </li>
             <li>
-                <a href="#" id="goToMap3">Matador</a>
+                <a href="#" data-id="3" class="goToLocation">Matador</a>
             </li>
             <li>
-                <a href="#" id="goToMap4">Excuse me caffe</a>
+                <a href="#" data-id="4" class="goToLocation">Excuse me caffe</a>
             </li>
             <li>
-                <a href="#" id="goToMap5">Last supper</a>
+                <a href="#" data-id="5" class="goToLocation">Last supper</a>
             </li>
         </ul>
     </div>
@@ -47,12 +46,11 @@
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-
         <nav class="navbar navbar-expand-lg navbar-light bg-faded">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="#">Home</a>
+            <a class="navbar-brand" href="#">Local Restaurants</a>
 
 
             <form class="form-inline my-2 my-lg-0 d-lg-none">
@@ -73,15 +71,71 @@
         </nav>
 
         <div class="container-fluid">
-            <h1>Local Restaurants</h1>
             <p>Thhis is a wonderful place where you can find the best restaurants around Bucharest. Be sure to check this
                 page regulary and remember to bookmark us!.</p>
 
             <hr>
-            <div id="map"></div>
-            <hr>
-            <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Show Restaurants</a>
-            <a href="#reset" class="btn btn-secondary float-xs-right" id="reset">Reset</a>
+            <div class="row">
+                <div class="col-md-9">
+                    <div id="map"></div>
+                    <hr>
+                    <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Show Restaurants</a>
+                    <a href="#reset" class="btn btn-secondary float-xs-right" id="reset">Reset</a>
+                    <hr>
+                </div>
+                <div class="col-md-3 reviews">
+                    <div class="card">
+                        <div class="card-header">
+                            Featured
+                        </div>
+                        <div class="card-block">
+                            <h4 class="card-title">Special title treatment</h4>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-header">
+                            Featured
+                        </div>
+                        <div class="card-block">
+                            <h4 class="card-title">Special title treatment</h4>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-header">
+                            Featured
+                        </div>
+                        <div class="card-block">
+                            <h4 class="card-title">Special title treatment</h4>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-header">
+                            Featured
+                        </div>
+                        <div class="card-block">
+                            <h4 class="card-title">Special title treatment</h4>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-header">
+                            Featured
+                        </div>
+                        <div class="card-block">
+                            <h4 class="card-title">Special title treatment</h4>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -101,15 +155,8 @@
 <script src="assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv0QDQpHVav-cWx0oKdHxp0vuYnyJ_oco&callback=initMap" async defer></script>
+
 <script type="text/javascript">
-
-    $('#goToMap1').click(function(){ clickroute(beaches[0][1],beaches[0][2]); return false; });
-    $('#goToMap2').click(function(){ clickroute(beaches[1][1],beaches[1][2]); return false; });
-    $('#goToMap3').click(function(){ clickroute(beaches[2][1],beaches[2][2]); return false; });
-    $('#goToMap4').click(function(){ clickroute(beaches[3][1],beaches[3][2]); return false; });
-    $('#goToMap5').click(function(){ clickroute(beaches[4][1],beaches[4][2]); return false; });
-    $('#reset').click(function(){ clickroute(beaches[0][1],beaches[0][2],10); return false; });
-
 
     function clickroute(lati,long,zoom = 12) {
 
@@ -120,8 +167,61 @@
         map.setZoom(zoom);
     }
 
+    function getLocationById(id){
+        return_value = null;
+        beaches.forEach(function(my_location,index){
+            if(my_location.id == id){
+                return_value = my_location;
+            }
+        });
+        return return_value;
+    }
+
+    function goTolocationId(id){
+        my_location = getLocationById(id);
+        console.log(my_location);
+        clickroute(my_location.lat,my_location.lng,15);
+    }
+
+    function jsonLoaded(restaurants){
+        $('.reviews').html('');
+        restaurants.forEach(function(restaurant,index){
+            console.log(index,restaurant.name);
+            $('.reviews').append(
+                '<div class="card">\n' +
+                    '<div class="card-header">\n' +
+                        '<a href="#" class="goToLocation" data-id="'+restaurant.id+'">' +
+                            restaurant.name + '\n' +
+                        '</a> ' +
+                    '</div>\n' +
+                    '<div class="card-block">\n' +
+                        '<h4 class="card-title">Special title treatment</h4>\n' +
+                        '<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>\n' +
+                    '</div>\n' +
+                '</div>\n' +
+                '<br>'
+            );
+        });
+
+
+        $('.goToLocation').each(
+            function(index,value){
+                console.log('ucv',$(index).attr("data-id"),index,value);
+                $(value).click(function(element){
+                    goTolocationId($(value).attr("data-id"));
+                });
+            }
+        );
+    };
+
+
+
+
+
+
 </script>
-<script src="assets/js/google_maps.js"></script>
+
+<script src="assets/js/google_maps.js?v2"></script>
 
 
 <!-- Menu Toggle Script -->
