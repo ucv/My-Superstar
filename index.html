@@ -206,12 +206,11 @@
         var restaurant = {
             'name': form_data[2].value,
             'lat': parseFloat(form_data[0].value),
-            'lng': parseFloat(form_data[1].value),
-            'id': 4
+            'lng': parseFloat(form_data[1].value)
         }
 
         addMarker(restaurant.lat,restaurant.lng,restaurant.name);
-        addSidebarRestaurant(restaurant);
+        addNewRestaurant(restaurant);
 
     })
 
@@ -228,7 +227,17 @@
 
 
     var lastRestaurantAdded = 0;
-    function addSidebarRestaurant(restaurant){
+    function addNewRestaurant(restaurant){
+
+
+
+        if(!restaurant.hasOwnProperty("id")){
+            lastRestaurantAdded ++;
+            restaurant['id'] = lastRestaurantAdded;
+            beaches.push(restaurant);
+        }
+
+
         $('.sidebar-nav').append(
             '<li class="restaurant">\n' +
                 '<a href="#" data-id="' + restaurant.id + '" class="goToLocation">' + restaurant.name + '</a>\n' +
@@ -272,7 +281,7 @@
 
 
         restaurants.forEach(function (restaurant, index) {
-            addSidebarRestaurant(restaurant);
+            addNewRestaurant(restaurant);
         });
 
         $('.navigation-search').on('input', function (event) {
