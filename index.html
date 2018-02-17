@@ -163,6 +163,7 @@
                     <hr>
                     <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Show Restaurants</a>
                     <a href="#reset" class="btn btn-secondary float-xs-right" id="reset">Reset</a>
+                    <!--<a href="#" class="btn btn-secondary float-xs-right" id="getGoogleRestaurants">Get Google Restaurants</a>-->
                     <hr>
                 </div>
                 <div class="col-md-3">
@@ -264,6 +265,42 @@
         return false;
     });
 
+    $('#getGoogleRestaurants').click(function(){
+
+        var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=44.43199887566596,26.10370116106128&radius=500&type=restaurant&key=AIzaSyDv0QDQpHVav-cWx0oKdHxp0vuYnyJ_oco";
+
+        $.ajax({
+            url: url,
+            jsonp: "callback",
+            contentType: 'application/javascript',
+            dataType: "jsonp",
+            success: function (response) {
+                console.log(response);
+            }
+        });
+
+        return false;
+
+        $.getJSON(
+            url,
+
+
+
+            function( data ) {
+            reviews = data;
+        }).success(function(data){
+
+            console.log(data);
+
+
+        }).fail(function( jqxhr, textStatus, error ) {
+            var err = textStatus + ", " + error;
+            console.log( "Request Failed: " + err );
+        });
+
+
+    });
+
 
     $("#addReview").click(function (elem){
 
@@ -291,7 +328,9 @@
         }
 
         restaurant = addNewRestaurant(restaurant);
-        addMarker(restaurant.lat,restaurant.lng,restaurant.name,restaurant.id);
+        if(restaurant !== false){
+            addMarker(restaurant.lat,restaurant.lng,restaurant.name,restaurant.id);
+        }
 
 
     })
@@ -331,8 +370,6 @@
 
     var lastRestaurantAdded = 0;
     function addNewRestaurant(restaurant){
-
-
 
         if(!restaurant.hasOwnProperty("id")){
             lastRestaurantAdded ++;
