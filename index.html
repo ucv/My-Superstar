@@ -15,6 +15,52 @@
 </head>
 <body>
 
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add restaurant</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="addRestaurant">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lat">Latitude</label>
+                                <input type="text" class="form-control" id="lat" name="lat">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lon">Longitude</label>
+                                <input type="text" class="form-control" id="lon" name="lon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" aria-describedby="nameHelp" name="name" placeholder="Restaurant Name">
+                        <small id="nameHelp" class="form-text text-muted">Please enter the restaurant name!.</small>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="save">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div id="wrapper">
     <!-- Sidebar -->
@@ -140,11 +186,34 @@
             '</div>\n' +
             '<br>'
         );
+
+        $('.goToLocation').each(
+            function (index, value) {
+                $(value).click(function (element) {
+                    goTolocationId($(value).attr("data-id"));
+                });
+            }
+        );
     }
 
     var reviews;
 
     $('#reset').click(function(){ mapsGoToLocation(-33.890542,151.274856,10);$('.navigation-search').val('').trigger('input'); return false; });
+
+    $('#save').click(function(){
+        form_data = $('#addRestaurant').serializeArray();
+
+        var restaurant = {
+            'name': form_data[2].value,
+            'lat': parseFloat(form_data[0].value),
+            'lng': parseFloat(form_data[1].value),
+            'id': 4
+        }
+
+        addMarker(restaurant.lat,restaurant.lng,restaurant.name);
+        addSidebarRestaurant(restaurant);
+
+    })
 
     function getRestaurantById(id,_restaurants){
         var return_restaurant = null;
@@ -157,6 +226,27 @@
         return return_restaurant;
     };
 
+
+    var lastRestaurantAdded = 0;
+    function addSidebarRestaurant(restaurant){
+        $('.sidebar-nav').append(
+            '<li class="restaurant">\n' +
+                '<a href="#" data-id="' + restaurant.id + '" class="goToLocation">' + restaurant.name + '</a>\n' +
+            '</li>'
+        );
+
+        $('.goToLocation').each(
+            function (index, value) {
+                $(value).click(function (element) {
+                    goTolocationId($(value).attr("data-id"));
+                });
+            }
+        );
+
+        if(restaurant.id > lastRestaurantAdded){
+            lastRestaurantAdded = restaurant.id;
+        }
+    }
 
     function jsonLoaded(restaurants) {
         $('.reviews').html('');
@@ -173,13 +263,7 @@
                 }
             })
 
-            $('.goToLocation').each(
-                function (index, value) {
-                    $(value).click(function (element) {
-                        goTolocationId($(value).attr("data-id"));
-                    });
-                }
-            );
+
 
         }).fail(function( jqxhr, textStatus, error ) {
             var err = textStatus + ", " + error;
@@ -188,21 +272,8 @@
 
 
         restaurants.forEach(function (restaurant, index) {
-
-            $('.sidebar-nav').append(
-                '<li class="restaurant">\n' +
-                '<a href="#" data-id="' + restaurant.id + '" class="goToLocation">' + restaurant.name + '</a>\n' +
-                '</li>'
-            );
+            addSidebarRestaurant(restaurant);
         });
-
-        $('.goToLocation').each(
-            function (index, value) {
-                $(value).click(function (element) {
-                    goTolocationId($(value).attr("data-id"));
-                });
-            }
-        );
 
         $('.navigation-search').on('input', function (event) {
             $('.reviews a').each(function(id,element){

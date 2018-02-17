@@ -1,6 +1,12 @@
 var map, infoWindow, beaches;
 
+var mapImage = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
+function addRestaurant(lat,lng){
+    $("#myModal").modal();
+    $("#myModal #lat").val(lat);
+    $("#myModal #lon").val(lng);
+}
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -8,6 +14,12 @@ function initMap() {
         zoom: 10
     });
     infoWindow = new google.maps.InfoWindow;
+
+
+    google.maps.event.addListener(map, 'click', function(event) {
+        addRestaurant(event.latLng.lat(),event.latLng.lng())
+    });
+
 
     // Data for the markers consisting of a name, a LatLng and a zIndex for the
     // order in which these markers should display on top of each other.
@@ -57,6 +69,32 @@ function initMap() {
     }
 }
 
+function addMarker(lat,lon,name){
+
+    var image = {
+        url: mapImage,
+        // This marker is 20 pixels wide by 32 pixels high.
+        size: new google.maps.Size(20, 32),
+        // The origin for this image is (0, 0).
+        origin: new google.maps.Point(0, 0),
+        // The anchor for this image is the base of the flagpole at (0, 32).
+        anchor: new google.maps.Point(0, 32)
+    };
+
+    var shape = {
+        coords: [1, 1, 1, 20, 18, 20, 18, 1],
+        type: 'poly'
+    };
+
+    var marker = new google.maps.Marker({
+        position: {lat: lat, lng: lon},
+        map: map,
+        icon: image,
+        shape: shape,
+        title: name
+    });
+}
+
 function setMarkers(map) {
     // Adds markers to the map.
 
@@ -66,7 +104,7 @@ function setMarkers(map) {
     // Origins, anchor positions and coordinates of the marker increase in the X
     // direction to the right and in the Y direction down.
     var image = {
-        url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+        url: mapImage,
         // This marker is 20 pixels wide by 32 pixels high.
         size: new google.maps.Size(20, 32),
         // The origin for this image is (0, 0).
