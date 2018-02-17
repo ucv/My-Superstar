@@ -42,14 +42,12 @@ $beaches = [
 
 $reviews = [
     [
-        'id' => 1,
         'restaurant_id' => 1,
         'reviewer_name' => 'Lonely Heart',
         'reviewer_comment' => 'This is a fantastic place to spend a day alone! Will come back for sure',
         'reviewer_stars' => 5
     ],
     [
-        'id' => 2,
         'restaurant_id' => 3,
         'reviewer_name' => 'Someone Important',
         'reviewer_comment' => 'Not the best place to setup a meeting, nice place dough!',

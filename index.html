@@ -75,11 +75,28 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <form id="addReviewForm">
+
+                    <input type="hidden" id="restaurant_id" name="restaurant_id">
+                    <input type="hidden" id="reviewer_stars" name="reviewer_stars">
+
+                    <div class="form-group">
+                        <label> Restaurant Name</label>
+                        <input type="text" class="form-control" aria-describedby="nameHelp" id="restaurant_name" name="restaurantName" placeholder="Restaurant Name" disabled>
+                        <small class="form-text text-muted">Please enter the restaurant name!.</small>
+                    </div>
+
                     <div class="form-group">
                         <label> Name</label>
                         <input type="text" class="form-control" aria-describedby="nameHelp" name="name" placeholder="Restaurant Name">
-                        <small class="form-text text-muted">Please enter the restaurant name!.</small>
+                        <small class="form-text text-muted">Please Enter your name.</small>
                     </div>
+
+                    <div class="form-group">
+                        <label>Review</label>
+                        <textarea class="form-control" name="comment" rows="3"></textarea>
+                        <small class="form-text text-muted">Add a review.We can't understant "This sucks!" reviews.</small>
+                    </div>
+
                 </form>
             </div>
 
@@ -92,9 +109,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 <div id="wrapper">
     <!-- Sidebar -->
@@ -204,6 +218,7 @@
         my_location = getLocationById(id);
         $('.navigation-search').val(my_location.name).trigger('input');
         mapsGoToLocation(my_location.lat,my_location.lng,15);
+        $('#addReview').attr( "data-id", id )
         $('#addReview').show();
     }
 
@@ -236,6 +251,18 @@
 
     $('#reset').click(function(){ mapsGoToLocation(-33.890542,151.274856,10);$('.navigation-search').val('').trigger('input'); return false; });
 
+
+    $("#addReview").click(function (elem){
+
+        $("#addReviewModal").modal();
+        restaurant = getRestaurantById(parseInt($(this).attr("data-id")),beaches);
+        $('#restaurant_id').val(restaurant.id);
+        $('#reviewer_stars').val(5);
+        $('#restaurant_name').val(restaurant.name);
+
+
+    });
+
     $('#addRestaurantModal .save').click(function(){
         form_data = $('#addRestaurantForm').serializeArray();
 
@@ -250,6 +277,26 @@
 
 
     })
+
+    $('#addReviewModal .save').click(function(){
+        var form_data = $('#addReviewForm').serializeArray();
+
+        var review = {
+            'restaurant_id': form_data[0].value,
+            'reviewer_name': form_data[2].value,
+            'reviewer_comment': form_data[3].value,
+            'reviewer_stars': form_data[1].value
+        };
+
+        // debugger;
+
+        addPublicReview(getRestaurantById(review.restaurant_id,beaches),review);
+
+
+
+
+    });
+
 
     function getRestaurantById(id,_restaurants){
         var return_restaurant = null;
@@ -347,11 +394,6 @@
             });
         });
     }
-
-
-
-
-
 
 
 </script>
