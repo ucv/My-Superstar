@@ -3,9 +3,9 @@ var map, infoWindow, beaches;
 var mapImage = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
 function addRestaurant(lat,lng){
-    $("#myModal").modal();
-    $("#myModal #lat").val(lat);
-    $("#myModal #lon").val(lng);
+    $("#addRestaurantModal").modal();
+    $("#lat").val(lat);
+    $("#lon").val(lng);
 }
 
 function initMap() {
@@ -19,6 +19,12 @@ function initMap() {
     google.maps.event.addListener(map, 'click', function(event) {
         addRestaurant(event.latLng.lat(),event.latLng.lng())
     });
+
+
+    google.maps.event.addListener(map, 'dragend', function() {
+        $('#addReview').hide();
+        $('.navigation-search').val('').trigger('input');
+    })
 
 
     // Data for the markers consisting of a name, a LatLng and a zIndex for the
@@ -69,7 +75,7 @@ function initMap() {
     }
 }
 
-function addMarker(lat,lon,name){
+function addMarker(lat,lon,name, id){
 
     var image = {
         url: mapImage,
@@ -91,8 +97,17 @@ function addMarker(lat,lon,name){
         map: map,
         icon: image,
         shape: shape,
-        title: name
+        title: name,
+        id: id
     });
+
+    //Add marker listener
+    google.maps.event.addListener(marker, "click", function (event) {
+        var latitude = event.latLng.lat();
+        var longitude = event.latLng.lng();
+        goTolocationId(this.id);
+
+    }); //end addListener
 }
 
 function setMarkers(map) {
@@ -129,6 +144,13 @@ function setMarkers(map) {
             title: beach.name,
             zIndex: beach.id
         });
+
+        //Add marker listener
+        google.maps.event.addListener(marker, "click", function (event) {
+            var latitude = event.latLng.lat();
+            var longitude = event.latLng.lng();
+            goTolocationId(beach.id);
+        }); //end addListener
     }
 }
 

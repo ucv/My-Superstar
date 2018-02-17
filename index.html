@@ -16,7 +16,7 @@
 <body>
 
 <!-- The Modal -->
-<div class="modal fade" id="myModal">
+<div class="modal fade" id="addRestaurantModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
@@ -27,7 +27,7 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form id="addRestaurant">
+                <form id="addRestaurantForm">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -44,9 +44,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" aria-describedby="nameHelp" name="name" placeholder="Restaurant Name">
-                        <small id="nameHelp" class="form-text text-muted">Please enter the restaurant name!.</small>
+                        <label> Name</label>
+                        <input type="text" class="form-control"aria-describedby="nameHelp" name="name" placeholder="Restaurant Name">
+                        <small class="form-text text-muted">Please enter the restaurant name!.</small>
                     </div>
                 </form>
             </div>
@@ -54,12 +54,46 @@
             <!-- Modal footer -->
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-success" data-dismiss="modal" id="save">Save</button>
+                <button type="button" class="btn btn-success save" data-dismiss="modal">Save</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="addReviewModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add restaurant</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="addReviewForm">
+                    <div class="form-group">
+                        <label> Name</label>
+                        <input type="text" class="form-control" aria-describedby="nameHelp" name="name" placeholder="Restaurant Name">
+                        <small class="form-text text-muted">Please enter the restaurant name!.</small>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-success save" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 <div id="wrapper">
@@ -122,6 +156,7 @@
                     <div class="reviews">
 
                     </div>
+                    <button type="button" class="btn" id="addReview" style="display: none;">Add a review</button>
                 </div>
             </div>
 
@@ -169,6 +204,7 @@
         my_location = getLocationById(id);
         $('.navigation-search').val(my_location.name).trigger('input');
         mapsGoToLocation(my_location.lat,my_location.lng,15);
+        $('#addReview').show();
     }
 
     function addPublicReview(restaurant,review){
@@ -200,8 +236,8 @@
 
     $('#reset').click(function(){ mapsGoToLocation(-33.890542,151.274856,10);$('.navigation-search').val('').trigger('input'); return false; });
 
-    $('#save').click(function(){
-        form_data = $('#addRestaurant').serializeArray();
+    $('#addRestaurantModal .save').click(function(){
+        form_data = $('#addRestaurantForm').serializeArray();
 
         var restaurant = {
             'name': form_data[2].value,
@@ -209,8 +245,9 @@
             'lng': parseFloat(form_data[1].value)
         }
 
-        addMarker(restaurant.lat,restaurant.lng,restaurant.name);
-        addNewRestaurant(restaurant);
+        restaurant = addNewRestaurant(restaurant);
+        addMarker(restaurant.lat,restaurant.lng,restaurant.name,restaurant.id);
+
 
     })
 
@@ -255,6 +292,8 @@
         if(restaurant.id > lastRestaurantAdded){
             lastRestaurantAdded = restaurant.id;
         }
+
+        return restaurant;
     }
 
     function jsonLoaded(restaurants) {
