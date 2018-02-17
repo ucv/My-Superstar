@@ -42,7 +42,7 @@
 
 
             <form class="form-inline my-2 my-lg-0 d-lg-none">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                <input class="form-control mr-sm-2 navigation-search" type="text" placeholder="Search reviews">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
 
@@ -52,7 +52,7 @@
 
                 </ul>
                 <form class="form-inline my-2 my-lg-0 d-none d-lg-block">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <input class="form-control mr-sm-2 navigation-search" type="text" placeholder="Search reviews">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
@@ -71,57 +71,11 @@
                     <a href="#reset" class="btn btn-secondary float-xs-right" id="reset">Reset</a>
                     <hr>
                 </div>
-                <div class="col-md-3 reviews">
-                    <div class="card">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-block">
-                            <h4 class="card-title">Special title treatment</h4>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        </div>
+                <div class="col-md-3">
+                    <h4>Reviews</h4>
+                    <div class="reviews">
+
                     </div>
-                    <br>
-                    <div class="card">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-block">
-                            <h4 class="card-title">Special title treatment</h4>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="card">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-block">
-                            <h4 class="card-title">Special title treatment</h4>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="card">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-block">
-                            <h4 class="card-title">Special title treatment</h4>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="card">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-block">
-                            <h4 class="card-title">Special title treatment</h4>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        </div>
-                    </div>
-                    <br>
                 </div>
             </div>
 
@@ -167,6 +121,7 @@
 
     function goTolocationId(id){
         my_location = getLocationById(id);
+        $('.navigation-search').val(my_location.name).trigger('input');
         mapsGoToLocation(my_location.lat,my_location.lng,15);
     }
 
@@ -189,18 +144,18 @@
 
     var reviews;
 
-    function getRestaurantById(id,_restaurants){
+    $('#reset').click(function(){ mapsGoToLocation(-33.890542,151.274856,10);$('.navigation-search').val('').trigger('input'); return false; });
 
+    function getRestaurantById(id,_restaurants){
         var return_restaurant = null;
         _restaurants.forEach(function(restaurant){
             if(restaurant.id == id){
                 return_restaurant  = restaurant;
                 return
             }
-        })
+        });
         return return_restaurant;
-    }
-
+    };
 
 
     function jsonLoaded(restaurants) {
@@ -213,7 +168,6 @@
             var restaurant = null;
             reviews.forEach(function (review, index){
                 restaurant = getRestaurantById(review.restaurant_id,restaurants);
-                console.log(review);
                 if(restaurant !== null){
                     addPublicReview(restaurant,review);
                 }
@@ -250,6 +204,18 @@
             }
         );
 
+        $('.navigation-search').on('input', function (event) {
+            $('.reviews a').each(function(id,element){
+                var text = $(element).first().text();
+                var searchElement = event.target.value;
+                if(text.indexOf(searchElement) !== -1){
+                    $(element).parent().parent().show();
+                }else{
+                    $(element).parent().parent().hide();
+                }
+            });
+        });
+
         $('#sidebar-search').on('input', function (event) {
             $('.restaurant').each(function(id,element){
                 var text = $(element).first().text();
@@ -259,9 +225,7 @@
                 }else{
                     $(element).hide();
                 }
-
             });
-
         });
     }
 
