@@ -171,6 +171,7 @@
 
                     </div>
                     <button type="button" class="btn" id="addReview" style="display: none;">Add a review</button>
+                    <button type="button" class="btn" id="streetView" style="display: none;">See Street View</button>
                 </div>
             </div>
 
@@ -195,6 +196,8 @@
 
 <script type="text/javascript">
 
+    var my_lat, my_lon;
+
     function mapsGoToLocation(lati,long,zoom = 12) {
 
         var latLng = new google.maps.LatLng(lati, long); //Makes a latlng
@@ -202,6 +205,8 @@
         map.panTo(latLng); //Make map global
         // map.setZoom(zoom + Math.floor((Math.random() * 4) + 1));
         map.setZoom(zoom);
+        my_lat = lati;
+        my_lon =long;
     }
 
     function getLocationById(id){
@@ -215,11 +220,13 @@
     }
 
     function goTolocationId(id){
+        hideStreetView();
         my_location = getLocationById(id);
         $('.navigation-search').val(my_location.name).trigger('input');
         mapsGoToLocation(my_location.lat,my_location.lng,15);
-        $('#addReview').attr( "data-id", id )
+        $('#addReview').attr( "data-id", id );
         $('#addReview').show();
+        $('#streetView').show();
     }
 
     function addPublicReview(restaurant,review){
@@ -249,7 +256,13 @@
 
     var reviews;
 
-    $('#reset').click(function(){ mapsGoToLocation(-33.890542,151.274856,10);$('.navigation-search').val('').trigger('input'); return false; });
+    $('#reset').click(function(){
+        mapsGoToLocation(-33.890542,151.274856,10);
+        $('.navigation-search').val('').trigger('input');
+        hideStreetView();
+
+        return false;
+    });
 
 
     $("#addReview").click(function (elem){
@@ -260,6 +273,11 @@
         $('#reviewer_stars').val(5);
         $('#restaurant_name').val(restaurant.name);
 
+
+    });
+    $('#streetView').click(function (elem){
+
+        showStreetView(my_lat,my_lon);
 
     });
 
@@ -296,6 +314,7 @@
 
 
     });
+
 
 
     function getRestaurantById(id,_restaurants){

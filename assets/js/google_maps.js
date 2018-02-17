@@ -23,6 +23,7 @@ function initMap() {
 
     google.maps.event.addListener(map, 'dragend', function() {
         $('#addReview').hide();
+        $('#streetView').hide();
         $('.navigation-search').val('').trigger('input');
     })
 
@@ -53,6 +54,11 @@ function initMap() {
     }
 
 
+    // We get the map's default panorama and set up some defaults.
+    // Note that we don't yet set it visible.
+
+
+
 
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
@@ -72,6 +78,30 @@ function initMap() {
     } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
+    }
+}
+
+var panorama;
+
+function showStreetView(lat,lon) {
+
+    panorama = map.getStreetView();
+
+    panorama.setPosition({lat: lat, lng: lon});
+    panorama.setPov(({
+        heading: 265,
+        pitch: 0,
+        zoom: 1
+    }));
+
+    panorama.setVisible(true);
+}
+
+function hideStreetView() {
+
+    if (typeof panorama !== 'undefined') {
+        // the variable is defined
+        panorama.setVisible(false);
     }
 }
 
@@ -111,46 +141,10 @@ function addMarker(lat,lon,name, id){
 }
 
 function setMarkers(map) {
-    // Adds markers to the map.
 
-    // Marker sizes are expressed as a Size of X,Y where the origin of the image
-    // (0,0) is located in the top left of the image.
-
-    // Origins, anchor positions and coordinates of the marker increase in the X
-    // direction to the right and in the Y direction down.
-    var image = {
-        url: mapImage,
-        // This marker is 20 pixels wide by 32 pixels high.
-        size: new google.maps.Size(20, 32),
-        // The origin for this image is (0, 0).
-        origin: new google.maps.Point(0, 0),
-        // The anchor for this image is the base of the flagpole at (0, 32).
-        anchor: new google.maps.Point(0, 32)
-    };
-    // Shapes define the clickable region of the icon. The type defines an HTML
-    // <area> element 'poly' which traces out a polygon as a series of X,Y points.
-    // The final coordinate closes the poly by connecting to the first coordinate.
-    var shape = {
-        coords: [1, 1, 1, 20, 18, 20, 18, 1],
-        type: 'poly'
-    };
     for (var i = 0; i < beaches.length; i++) {
         var beach = beaches[i];
-        var marker = new google.maps.Marker({
-            position: {lat: beach.lat, lng: beach.lng},
-            map: map,
-            icon: image,
-            shape: shape,
-            title: beach.name,
-            zIndex: beach.id
-        });
-
-        //Add marker listener
-        google.maps.event.addListener(marker, "click", function (event) {
-            var latitude = event.latLng.lat();
-            var longitude = event.latLng.lng();
-            goTolocationId(beach.id);
-        }); //end addListener
+        addMarker(beach.lat,beach.lng,beach.name,beach.id);
     }
 }
 
