@@ -20,25 +20,13 @@
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
-            <li class="sidebar-brand">
+            <li class="sidebar-brand" style="clear: both">
                 <a href="#">
                     Restaurant List
                 </a>
-            </li>
-            <li>
-                <a href="#" data-id="1" class="goToLocation">My Casa</a>
-            </li>
-            <li>
-                <a href="#" data-id="2" class="goToLocation">Loco Amblade</a>
-            </li>
-            <li>
-                <a href="#" data-id="3" class="goToLocation">Matador</a>
-            </li>
-            <li>
-                <a href="#" data-id="4" class="goToLocation">Excuse me caffe</a>
-            </li>
-            <li>
-                <a href="#" data-id="5" class="goToLocation">Last supper</a>
+                <div class="form-group search">
+                    <input type="text" class="form-control" id="sidebar-search" placeholder="Search">
+                </div>
             </li>
         </ul>
     </div>
@@ -158,7 +146,7 @@
 
 <script type="text/javascript">
 
-    function clickroute(lati,long,zoom = 12) {
+    function mapsGoToLocation(lati,long,zoom = 12) {
 
         var latLng = new google.maps.LatLng(lati, long); //Makes a latlng
 
@@ -179,40 +167,57 @@
 
     function goTolocationId(id){
         my_location = getLocationById(id);
-        console.log(my_location);
-        clickroute(my_location.lat,my_location.lng,15);
+        mapsGoToLocation(my_location.lat,my_location.lng,15);
     }
 
-    function jsonLoaded(restaurants){
+    function jsonLoaded(restaurants) {
         $('.reviews').html('');
-        restaurants.forEach(function(restaurant,index){
-            console.log(index,restaurant.name);
+        restaurants.forEach(function (restaurant, index) {
             $('.reviews').append(
                 '<div class="card">\n' +
-                    '<div class="card-header">\n' +
-                        '<a href="#" class="goToLocation" data-id="'+restaurant.id+'">' +
-                            restaurant.name + '\n' +
-                        '</a> ' +
-                    '</div>\n' +
-                    '<div class="card-block">\n' +
-                        '<h4 class="card-title">Special title treatment</h4>\n' +
-                        '<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>\n' +
-                    '</div>\n' +
+                '<div class="card-header">\n' +
+                '<a href="#" class="goToLocation" data-id="' + restaurant.id + '">' +
+                restaurant.name + '\n' +
+                '</a> ' +
+                '</div>\n' +
+                '<div class="card-block">\n' +
+                '<h4 class="card-title">Special title treatment</h4>\n' +
+                '<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>\n' +
+                '</div>\n' +
                 '</div>\n' +
                 '<br>'
             );
+            $('.sidebar-nav').append(
+                '<li class="restaurant">\n' +
+                '<a href="#" data-id="' + restaurant.id + '" class="goToLocation">' + restaurant.name + '</a>\n' +
+                '</li>'
+            );
+
         });
 
-
         $('.goToLocation').each(
-            function(index,value){
-                console.log('ucv',$(index).attr("data-id"),index,value);
-                $(value).click(function(element){
+            function (index, value) {
+                $(value).click(function (element) {
                     goTolocationId($(value).attr("data-id"));
                 });
             }
         );
-    };
+
+        $('#sidebar-search').on('input', function (event) {
+            $('.restaurant').each(function(id,element){
+                var text = $(element).first().text();
+                var searchElement = event.target.value;
+                if(text.indexOf(searchElement) !== -1){
+                    $(element).show();
+                }else{
+                    $(element).hide();
+                }
+
+            });
+
+        });
+    }
+
 
 
 

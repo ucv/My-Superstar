@@ -84,9 +84,14 @@ body {
 }
 
 .sidebar-nav>.sidebar-brand {
-    height: 65px;
+    min-height: 65px;
     font-size: 18px;
     line-height: 60px;
+}
+
+.sidebar-nav>.sidebar-brand>.search{
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .sidebar-nav>.sidebar-brand a {
