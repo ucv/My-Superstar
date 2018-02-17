@@ -170,29 +170,76 @@
         mapsGoToLocation(my_location.lat,my_location.lng,15);
     }
 
-    function jsonLoaded(restaurants) {
-        $('.reviews').html('');
-        restaurants.forEach(function (restaurant, index) {
-            $('.reviews').append(
-                '<div class="card">\n' +
+    function addPublicReview(restaurant,review){
+        $('.reviews').append(
+            '<div class="card">\n' +
                 '<div class="card-header">\n' +
-                '<a href="#" class="goToLocation" data-id="' + restaurant.id + '">' +
-                restaurant.name + '\n' +
-                '</a> ' +
+                    '<a href="#" class="goToLocation" data-id="' + restaurant.id + '">' +
+                        restaurant.name + '\n' +
+                    '</a> ' +
                 '</div>\n' +
                 '<div class="card-block">\n' +
-                '<h4 class="card-title">Special title treatment</h4>\n' +
-                '<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>\n' +
+                    '<h4 class="card-title">'+ review.reviewer_name +'</h4>\n' +
+                    '<p class="card-text">'+ review.reviewer_comment +'.</p>\n' +
                 '</div>\n' +
-                '</div>\n' +
-                '<br>'
+            '</div>\n' +
+            '<br>'
+        );
+    }
+
+    var reviews;
+
+    function getRestaurantById(id,_restaurants){
+
+        var return_restaurant = null;
+        _restaurants.forEach(function(restaurant){
+            if(restaurant.id == id){
+                return_restaurant  = restaurant;
+                return
+            }
+        })
+        return return_restaurant;
+    }
+
+
+
+    function jsonLoaded(restaurants) {
+        $('.reviews').html('');
+
+        $.getJSON( "assets/reviews.json", function( data ) {
+            reviews = data;
+        }).success(function(data){
+            reviews = data;
+            var restaurant = null;
+            reviews.forEach(function (review, index){
+                restaurant = getRestaurantById(review.restaurant_id,restaurants);
+                console.log(review);
+                if(restaurant !== null){
+                    addPublicReview(restaurant,review);
+                }
+            })
+
+            $('.goToLocation').each(
+                function (index, value) {
+                    $(value).click(function (element) {
+                        goTolocationId($(value).attr("data-id"));
+                    });
+                }
             );
+
+        }).fail(function( jqxhr, textStatus, error ) {
+            var err = textStatus + ", " + error;
+            console.log( "Request Failed: " + err );
+        });
+
+
+        restaurants.forEach(function (restaurant, index) {
+
             $('.sidebar-nav').append(
                 '<li class="restaurant">\n' +
                 '<a href="#" data-id="' + restaurant.id + '" class="goToLocation">' + restaurant.name + '</a>\n' +
                 '</li>'
             );
-
         });
 
         $('.goToLocation').each(

@@ -40,10 +40,31 @@ $beaches = [
     ]
 ];
 
+$reviews = [
+    [
+        'id' => 1,
+        'restaurant_id' => 1,
+        'reviewer_name' => 'Lonely Heart',
+        'reviewer_comment' => 'This is a fantastic place to spend a day alone! Will come back for sure',
+        'reviewer_stars' => 5
+    ],
+    [
+        'id' => 2,
+        'restaurant_id' => 3,
+        'reviewer_name' => 'Someone Important',
+        'reviewer_comment' => 'Not the best place to setup a meeting, nice place dough!',
+        'reviewer_stars' => 4
+    ]
+];
+
 $beaches_json = json_encode($beaches);
 
 $myfile = fopen("restaurants.json", "w") or die("Unable to open file!".json_encode(error_get_last()));
 fwrite($myfile, $beaches_json);
+fclose($myfile);
+
+$myfile = fopen("reviews.json", "w") or die("Unable to open file!".json_encode(error_get_last()));
+fwrite($myfile, json_encode($reviews));
 fclose($myfile);
 
 echo $beaches_json;
