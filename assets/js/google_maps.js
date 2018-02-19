@@ -62,6 +62,9 @@ function initMap() {
 
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
+
+        //https://stackoverflow.com/questions/32329464/chrome-navigator-geolocation-getcurrentposition-error-403
+        //THIS MAY FAIL
         navigator.geolocation.getCurrentPosition(function (position) {
             var pos = {
                 lat: position.coords.latitude,

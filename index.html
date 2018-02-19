@@ -381,7 +381,7 @@
                 return false;
             }
         });
-        if(isRestaurantAdded){
+        if(isRestaurantAdded && !restaurant.id === parseInt(restaurant.id, 10)){
             return false;
         }
 
