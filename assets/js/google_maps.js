@@ -67,8 +67,20 @@ function initMap() {
             };
 
             infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
+            // infoWindow.setContent('Location found.');
+            // infoWindow.open(map);
+
+            var my_image = {
+                url: 'http://cmg.co.uk/wp-content/uploads/2016/05/contactpin.svg',
+                // This marker is 20 pixels wide by 32 pixels high.
+                size: new google.maps.Size(20, 32),
+                // The origin for this image is (0, 0).
+                origin: new google.maps.Point(0, 0),
+                // The anchor for this image is the base of the flagpole at (0, 32).
+                anchor: new google.maps.Point(0, 32)
+            };
+
+            addMarker(position.coords.latitude,position.coords.longitude,"my_location",0,my_image);
             map.setCenter(pos);
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -103,7 +115,7 @@ function hideStreetView() {
     }
 }
 
-function addMarker(lat,lon,name, id){
+function addMarker(lat,lon,name, id ,_image = null){
 
     var image = {
         url: mapImage,
@@ -114,6 +126,10 @@ function addMarker(lat,lon,name, id){
         // The anchor for this image is the base of the flagpole at (0, 32).
         anchor: new google.maps.Point(0, 32)
     };
+
+    if(_image != null){
+        image = _image;
+    }
 
     var shape = {
         coords: [1, 1, 1, 20, 18, 20, 18, 1],
