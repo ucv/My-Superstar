@@ -77,7 +77,7 @@
                 <form id="addReviewForm">
 
                     <input type="hidden" id="restaurant_id" name="restaurant_id">
-                    <input type="hidden" id="reviewer_stars" name="reviewer_stars">
+                    <!--<input type="hidden" id="reviewer_stars" name="reviewer_stars">-->
 
                     <div class="form-group">
                         <label> Restaurant Name</label>
@@ -87,9 +87,15 @@
 
                     <div class="form-group">
                         <label> Name</label>
-                        <input type="text" class="form-control" aria-describedby="nameHelp" name="name" placeholder="Restaurant Name">
+                        <input type="text" class="form-control" aria-describedby="nameHelp" name="name" placeholder="Your name">
                         <small class="form-text text-muted">Please Enter your name.</small>
                     </div>
+
+                    <div class="form-group">
+                        <label> Review </label>
+                        <input type="text" class="form-control" aria-describedby="nameHelp" name="reviewer_stars" placeholder="Please enter a value from 1 to 5">
+                    </div>
+
 
                     <div class="form-group">
                         <label>Review</label>
@@ -109,8 +115,7 @@
         </div>
     </div>
 </div>
-
-<div id="wrapper">
+ <div id="wrapper" class="toggled">
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
@@ -231,11 +236,35 @@
     }
 
     function addPublicReview(restaurant,review){
+
+        var restaurant_reviews = [];
+
+        reviews.forEach(function(review){
+            if(review.restaurant_id == restaurant.id){
+                restaurant_reviews.push(review.reviewer_stars);
+            }
+        });
+
+        var sum_reviews = 0;
+        restaurant_reviews.forEach(function(review_scores){
+            sum_reviews += parseInt(review_scores);
+        })
+
+        var avg = sum_reviews/restaurant_reviews.length;
+
+        beaches.forEach(function(s_restaurant,index){
+            if(s_restaurant.id == s_restaurant.id){
+                beaches[index].review = review.reviewer_stars
+            }
+        });
+
+        $('.restaurant a[data-id="' + restaurant.id +'"]').text( restaurant.name + ' ('+avg+')');
+
         $('.reviews').append(
             '<div class="card">\n' +
                 '<div class="card-header">\n' +
                     '<a href="#" class="goToLocation" data-id="' + restaurant.id + '">' +
-                        restaurant.name + '\n' +
+                        restaurant.name + ' ('+review.reviewer_stars+')\n' +
                     '</a> ' +
                 '</div>\n' +
                 '<div class="card-block">\n' +
@@ -277,7 +306,7 @@
                 location: map.center.lat()+","+map.center.lng()
             },
             function( data ) {
-            reviews = data;
+            // reviews = data;
         }).success(function(data){
 
 
@@ -288,8 +317,9 @@
                     'name': data_restaurant.name,
                     'lat': data_restaurant.geometry.location.lat,
                     'lng': data_restaurant.geometry.location.lng,
-                    'id': data_restaurant.id
-                }
+                    'id': data_restaurant.id,
+                    'review': data_restaurant.rating
+                };
 
                 restaurant = addNewRestaurant(restaurant);
                 if(restaurant !== false){
@@ -305,12 +335,12 @@
         });
     });
 
-    $("#addReview").click(function (elem){
+    $("#addReview").click(function (){
 
         $("#addReviewModal").modal();
-        restaurant = getRestaurantById(parseInt($(this).attr("data-id")),beaches);
+        restaurant = getRestaurantById($(this).attr("data-id"),beaches);
         $('#restaurant_id').val(restaurant.id);
-        $('#reviewer_stars').val(5);
+        // $('#reviewer_stars').val(5);
         $('#restaurant_name').val(restaurant.name);
     });
     $('#streetView').click(function (elem){
@@ -339,12 +369,12 @@
 
         var review = {
             'restaurant_id': form_data[0].value,
-            'reviewer_name': form_data[2].value,
+            'reviewer_name': form_data[1].value,
             'reviewer_comment': form_data[3].value,
-            'reviewer_stars': form_data[1].value
+            'reviewer_stars': form_data[2].value
         };
 
-        // debugger;
+        reviews.push(review);
 
         addPublicReview(getRestaurantById(review.restaurant_id,beaches),review);
 
@@ -371,7 +401,7 @@
         if(!restaurant.hasOwnProperty("id")){
             lastRestaurantAdded ++;
             restaurant['id'] = lastRestaurantAdded;
-            beaches.push(restaurant);
+            // beaches.push(restaurant);
         }
 
         var isRestaurantAdded = false;
@@ -381,15 +411,19 @@
                 return false;
             }
         });
-        if(isRestaurantAdded && !restaurant.id === parseInt(restaurant.id, 10)){
+        if(isRestaurantAdded || !restaurant.id == parseInt(restaurant.id, 10)){
             return false;
         }
 
         beaches.push(restaurant);
 
+        if(restaurant.review == undefined){
+            restaurant.review = 0;
+        }
+
         $('.sidebar-nav').append(
             '<li class="restaurant">\n' +
-                '<a href="#" data-id="' + restaurant.id + '" class="goToLocation">' + restaurant.name + '</a>\n' +
+                '<a href="#" data-id="' + restaurant.id + '" class="goToLocation">' + restaurant.name +' ('+restaurant.review+')</a>\n' +
             '</li>'
         );
 
